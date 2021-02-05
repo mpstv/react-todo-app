@@ -37,7 +37,7 @@ export default class App extends React.Component<
   private deleteElement(elementForDeleteId: Symbol) {
     this.setState({
       todoListItems: this.state.todoListItems.filter(
-        (listElement) => listElement.id != elementForDeleteId
+        (listElement) => listElement.id !== elementForDeleteId
       ),
     });
   }
