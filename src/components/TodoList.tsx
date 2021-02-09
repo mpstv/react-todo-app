@@ -1,16 +1,13 @@
-import { ReactElement } from "react";
+import { Dispatch, ReactElement } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { TodoListElement } from "../models/TodoListElement";
+import { removeElement, selectTodoList } from "../store/TodoListSlice";
 
-type TodoListProps = {
-  todoList: TodoListElement[];
-  deleteElement: (elementId: Symbol) => void;
-};
+export function TodoList(): ReactElement<unknown> {
+  const todoList: TodoListElement[] = useSelector(selectTodoList);
+  const dispatch = useDispatch();
 
-export function TodoList({
-  todoList,
-  deleteElement,
-}: TodoListProps): ReactElement<TodoListProps> {
-  const list = createTodoList(todoList, deleteElement);
+  const list = createTodoList(todoList, dispatch);
 
   return (
     <div>
@@ -22,26 +19,24 @@ export function TodoList({
 
 function createTodoList(
   todoList: TodoListElement[],
-  deleteElement: (element: Symbol) => void
+  dispatch: Dispatch<any>
 ): JSX.Element {
   if (!todoList.length) {
     return <p>Todo list is empty!</p>;
   }
 
-  const listItems = todoList
-    .sort((a, b) => a.priority - b.priority)
-    .map((todoListElement) => (
-      <li>
-        <h3>
-          {todoListElement.priority}, {todoListElement.header}{" "}
-          <button onClick={() => deleteElement(todoListElement.id)}>
-            Удалить
-          </button>
-        </h3>
-        <p>{todoListElement.deadLine.toLocaleDateString()}</p>
-        <p>{todoListElement.content}</p>
-      </li>
-    ));
+  const listItems = todoList.map((todoListElement) => (
+    <li key={todoListElement.id}>
+      <h3>
+        {todoListElement.priority}, {todoListElement.header}
+        <button onClick={() => dispatch(removeElement(todoListElement.id))}>
+          Удалить
+        </button>
+      </h3>
+      <p>{todoListElement.deadLine.toLocaleDateString()}</p>
+      <p>{todoListElement.content}</p>
+    </li>
+  ));
 
   return <ul>{listItems}</ul>;
 }

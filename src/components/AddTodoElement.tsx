@@ -1,10 +1,7 @@
 import React from "react";
 import { ReactElement } from "react";
-import { TodoListElement } from "../models/TodoListElement";
-
-type AddTodoElementProps = {
-  onElementAdd: (element: TodoListElement) => void;
-};
+import store from "../store/store";
+import { addTodoListElementThunk } from "../store/TodoListSlice";
 
 type AddTodoElementState = {
   priority: number;
@@ -14,10 +11,10 @@ type AddTodoElementState = {
 };
 
 export class AddTodoElement extends React.Component<
-  AddTodoElementProps,
+  unknown,
   AddTodoElementState
 > {
-  constructor(props: AddTodoElementProps) {
+  constructor(props: unknown) {
     super(props);
     this.state = this.defaultState;
   }
@@ -67,10 +64,7 @@ export class AddTodoElement extends React.Component<
   }
 
   private submitForm(event: React.FormEvent<HTMLFormElement>) {
-    this.props.onElementAdd({
-      ...this.state,
-      id: Symbol(),
-    });
+    store.dispatch(addTodoListElementThunk(this.state));
 
     event.preventDefault();
     this.setState(this.defaultState);
