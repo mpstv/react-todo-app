@@ -1,9 +1,11 @@
 import React from "react";
 import { ReactElement } from "react";
+import { Redirect } from "react-router-dom";
 import store from "../store/store";
 import { addTodoListElementThunk } from "../store/TodoListSlice";
 
 type AddTodoElementState = {
+  redirect: boolean;
   priority: number;
   header: string;
   content: string;
@@ -16,10 +18,20 @@ export class AddTodoElement extends React.Component<
 > {
   constructor(props: unknown) {
     super(props);
-    this.state = this.defaultState;
+    this.state = {
+      redirect: false,
+      priority: 0,
+      header: "",
+      content: "",
+      deadLine: new Date(),
+    };
   }
 
   render(): ReactElement {
+    if (this.state.redirect) {
+      return <Redirect to="/" />;
+    }
+
     return (
       <form onSubmit={(event) => this.submitForm(event)}>
         <label>
@@ -65,17 +77,8 @@ export class AddTodoElement extends React.Component<
 
   private submitForm(event: React.FormEvent<HTMLFormElement>) {
     store.dispatch(addTodoListElementThunk(this.state));
+    this.setState({ redirect: true });
 
     event.preventDefault();
-    this.setState(this.defaultState);
-  }
-
-  private get defaultState(): Readonly<AddTodoElementState> {
-    return {
-      priority: 0,
-      header: "",
-      content: "",
-      deadLine: new Date(),
-    };
   }
 }
