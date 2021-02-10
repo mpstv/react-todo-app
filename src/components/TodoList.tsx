@@ -11,7 +11,7 @@ export function TodoList(): ReactElement<unknown> {
 
   return (
     <div>
-      <h3>Todo List</h3>
+      <h1>Todo List</h1>
       {list}
     </div>
   );
@@ -33,7 +33,7 @@ function createTodoList(
           Удалить
         </button>
       </h3>
-      <p>{todoListElement.deadLine.toLocaleDateString()}</p>
+      <h5>{todoListElement.deadLine.toLocaleDateString()}</h5>
       <p>{todoListElement.content}</p>
     </li>
   ));

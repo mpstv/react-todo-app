@@ -6,17 +6,17 @@ import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
 export default function App(): ReactElement<unknown> {
   return (
     <BrowserRouter>
-      <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Todo List</Link>
-            </li>
-            <li>
-              <Link to="/add-todo">Add Todo</Link>
-            </li>
-          </ul>
-        </nav>
+      <nav>
+        <ul>
+          <li>
+            <Link to="/">Todo List</Link>
+          </li>
+          <li>
+            <Link to="/add-todo">Add Todo</Link>
+          </li>
+        </ul>
+      </nav>
+      <main>
         <Switch>
           <Route path="/add-todo">
             <AddTodoElement />
@@ -25,7 +25,7 @@ export default function App(): ReactElement<unknown> {
             <TodoList />
           </Route>
         </Switch>
-      </div>
+      </main>
     </BrowserRouter>
   );
 }

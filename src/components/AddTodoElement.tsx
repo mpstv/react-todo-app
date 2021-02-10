@@ -33,7 +33,10 @@ export class AddTodoElement extends React.Component<
     }
 
     return (
-      <form onSubmit={(event) => this.submitForm(event)}>
+      <form
+        className="add-todo-element-form"
+        onSubmit={(event) => this.submitForm(event)}
+      >
         <label>
           Priority:
           <input
@@ -42,6 +45,7 @@ export class AddTodoElement extends React.Component<
             onChange={(event) =>
               this.setState({ priority: Number(event.target.value) })
             }
+            required
           />
         </label>
         <label>
@@ -50,14 +54,15 @@ export class AddTodoElement extends React.Component<
             type="text"
             value={this.state.header}
             onChange={(event) => this.setState({ header: event.target.value })}
+            required
           />
         </label>
         <label>
           Content:
-          <input
-            type="text"
+          <textarea
             value={this.state.content}
             onChange={(event) => this.setState({ content: event.target.value })}
+            required
           />
         </label>
         <label>
@@ -68,9 +73,10 @@ export class AddTodoElement extends React.Component<
             onChange={(event) =>
               this.setState({ deadLine: new Date(event.target.value) })
             }
+            required
           />
         </label>
-        <input type="submit" value="Add" />
+        <input type="submit" value="Add todo !!!" />
       </form>
     );
   }
